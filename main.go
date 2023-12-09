@@ -5,7 +5,7 @@ import (
 	"os"
 	"log"
 	"fmt"
-
+	"net/http"
 	"github.com/gin-gonic/gin"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
@@ -83,13 +83,55 @@ func main() {
 		
 	})
 	router.PUT("/api/books/:id", func(ctx *gin.Context) {
-		id:=ctx.Param("id")
-		jsonObject := map[string]interface{}{
-			"id":id,
-		}
-		ctx.AsciiJSON(200, jsonObject)
-	})
 
+		id := ctx.Param("id")
+
+		var updatedBook models.Book;
+		if err := ctx.BindJSON(&updatedBook); err != nil {
+			ctx.JSON(401,gin.H{"error": err.Error()})
+			return
+		}
+		var fields []interface{}
+		var values []interface{}
+		if(len(updatedBook.Location)>0){
+			fields = append(fields, "location")
+			values = append(values,updatedBook.Location)
+		}
+		if(len(updatedBook.Name)>0){
+			fields = append(fields, "name")
+			values = append(values,updatedBook.Name)
+		}
+		if(len(updatedBook.Image)>0){
+			fields = append(fields, "image_url")
+			values = append(values,updatedBook.Image)
+		}
+		if(len(updatedBook.Published_date)>0){
+			fields = append(fields, "published_date")
+			values = append(values,updatedBook.Published_date)
+		}
+		if(len(updatedBook.Author)>0){
+			fields = append(fields, "author_name")
+			values = append(values,updatedBook.Author)
+		}
+		query := "UPDATE Book SET "
+		for r:= 0;r<len(fields);r++ {
+			if r == len(fields)-1 {
+				query+=fmt.Sprintf("%s = ? ",fields[r])
+			} else {
+             query+=fmt.Sprintf("%s = ?, ",fields[r])
+			}
+		}
+		query+=fmt.Sprintf(" WHERE %s = ?","id")
+		values = append(values, id)
+		fmt.Println(query)
+		_, err := db.Exec(query,values...)
+		if err != nil {
+			ctx.JSON(401,gin.H{"error": err.Error()})
+			return
+		}
+		ctx.JSON(http.StatusOK,gin.H{"message":"Sucessfully updated"});
+		
+	})
 	
 
 
