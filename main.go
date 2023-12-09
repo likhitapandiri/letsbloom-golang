@@ -5,9 +5,11 @@ import (
 	"os"
 	"log"
 	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/likhitapandiri/letsbloom-golang/models"
 )
 
 func main() {
@@ -35,11 +37,13 @@ func main() {
 		ctx.AsciiJSON(200, jsonObject)
 	})
 	router.POST("/api/books", func(ctx *gin.Context) {
-		jsonObject := map[string]interface{}{
-			"audi": 4.8,
-			"benz": 4.9,
+		var book models.Book;
+		if err := ctx.BindJSON(&book); err != nil {
+			ctx.JSON(401, gin.H{"error": err.Error()})
+			return
 		}
-		ctx.AsciiJSON(200, jsonObject)
+		fmt.Printf("%+v\n",book)
+		
 	})
 	router.PUT("/api/books/:id", func(ctx *gin.Context) {
 		id:=ctx.Param("id")
