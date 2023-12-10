@@ -9,7 +9,7 @@ How to run:
 
 Commands : 
 
-cd folder_name
+cd letsbloom-golang
 
 go mod tidy
 
