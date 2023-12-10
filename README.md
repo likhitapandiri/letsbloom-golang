@@ -5,6 +5,16 @@ Created a simple RESTful API with endpoints for handling GET, POST, and PUT requ
 The file includes the handlers for GET, PUT, POST methods.
 Created a database using mysql which includes a table named Book which has columns of id, name,author_name,published_date,image_url, and location.
 
+How to run:
+
+Commands : 
+
+cd folder_name
+
+go mod tidy
+
+go run main.go
+
 1) Posting a New Book data.
    
 Endpoint: {/api/books}
@@ -29,15 +39,6 @@ Method: PUT
 
 Description: Extracting the book ID from the request parameters, binds the incoming JSON payload to a models. Book struct, and dynamically generates the SQL update query based on the provided fields.
 
-How to run:
-
-Commands : 
-
-cd folder_name
-
-go mod tidy
-
-go run main.go
 
 Dependencies used are
 Gin: Web framework for Go and 
