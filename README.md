@@ -6,7 +6,6 @@ The file includes the handlers for GET, PUT, POST methods.
 Created a database using mysql which includes a table named Book which has columns of id, name,author_name,published_date,image_url, and location.
 
 1) Posting a New Book data.
-
 Endpoint: {/api/books}
 Method: POST
 Description: Posting a new book by sending a JSON payload with the book details in the request body.Using the BindJSON method to bind the incoming JSON payload to models. Book struct and then insert the data into the database.
