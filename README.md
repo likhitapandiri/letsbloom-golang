@@ -29,6 +29,12 @@ Method: PUT
 
 Description: Extracting the book ID from the request parameters, binds the incoming JSON payload to a models. Book struct, and dynamically generates the SQL update query based on the provided fields.
 
+How to run:
+Commands : 
+cd folder_name
+go mod tidy
+go run main.go
+
 Dependencies used are
 Gin: Web framework for Go and 
 Go MySQL Driver: MySQL driver for Go.
